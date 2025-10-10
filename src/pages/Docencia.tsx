@@ -1,49 +1,50 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Users, Award } from "lucide-react";
+import { ArrowLeft, BookOpen, Clock, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const cursosData = [
+const cursosPregradoData = [
   {
     id: 1,
-    nombre: "Programación Avanzada",
-    nivel: "Pregrado",
-    tipo: "Obligatorio",
-    estudiantes: 45,
-    calificacionPromedio: 4.2,
-    semestre: "2025-1"
+    nombre: "Algoritmos y Programación I",
+    creditos: 3,
+    horasSemanales: 6,
+    estado: "Activo"
   },
   {
     id: 2,
     nombre: "Estructuras de Datos",
-    nivel: "Pregrado",
-    tipo: "Obligatorio",
-    estudiantes: 38,
-    calificacionPromedio: 4.5,
-    semestre: "2025-1"
+    creditos: 4,
+    horasSemanales: 8,
+    estado: "Activo"
   },
   {
     id: 3,
-    nombre: "Inteligencia Artificial",
-    nivel: "Posgrado",
-    tipo: "Electiva",
-    estudiantes: 15,
-    calificacionPromedio: 4.8,
-    semestre: "2025-1"
-  },
-  {
-    id: 4,
     nombre: "Desarrollo Web",
-    nivel: "Pregrado",
-    tipo: "Electiva",
-    estudiantes: 32,
-    calificacionPromedio: 4.6,
-    semestre: "2025-1"
+    creditos: 3,
+    horasSemanales: 6,
+    estado: "Activo"
+  }
+];
+
+const cursosPosgradoData = [
+  {
+    id: 1,
+    nombre: "Inteligencia Artificial Avanzada",
+    creditos: 4,
+    horasSemanales: 4,
+    estado: "Activo"
   }
 ];
 
 const Docencia = () => {
+  const totalCursos = cursosPregradoData.length + cursosPosgradoData.length;
+  const horasSemanales = [...cursosPregradoData, ...cursosPosgradoData].reduce((sum, curso) => sum + curso.horasSemanales, 0);
+  const horasAsignadas = 48;
+  const disponibilidad = horasAsignadas - horasSemanales;
+  const porcentajeDisponibilidad = Math.round((disponibilidad / horasAsignadas) * 100);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -56,85 +57,105 @@ const Docencia = () => {
 
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">Docencia</h1>
-          <p className="text-muted-foreground">Cursos actuales, estudiantes y rendimiento académico</p>
+          <p className="text-muted-foreground">Gestión de cursos y carga horaria</p>
         </div>
 
         {/* Resumen */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
+          <Card className="bg-card border-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Total Cursos</p>
-                  <p className="text-3xl font-bold text-primary">{cursosData.length}</p>
+                  <p className="text-sm text-muted-foreground mb-1">Cursos Activos</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{totalCursos}</p>
+                  <p className="text-xs text-muted-foreground">Total de asignaturas</p>
                 </div>
-                <Award className="h-10 w-10 text-primary/60" />
+                <BookOpen className="h-10 w-10 text-primary" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-accent/10 to-accent/5 border-accent/20">
+          <Card className="bg-card border-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Total Estudiantes</p>
-                  <p className="text-3xl font-bold text-accent">
-                    {cursosData.reduce((sum, curso) => sum + curso.estudiantes, 0)}
-                  </p>
+                  <p className="text-sm text-muted-foreground mb-1">Horas Semanales</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{horasSemanales}h</p>
+                  <p className="text-xs text-muted-foreground">de {horasAsignadas}h asignadas</p>
                 </div>
-                <Users className="h-10 w-10 text-accent/60" />
+                <Clock className="h-10 w-10 text-primary" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-success/10 to-success/5 border-success/20">
+          <Card className="bg-card border-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Calificación Promedio</p>
-                  <p className="text-3xl font-bold text-success">
-                    {(cursosData.reduce((sum, curso) => sum + curso.calificacionPromedio, 0) / cursosData.length).toFixed(1)}
+                  <p className="text-sm text-muted-foreground mb-1">Disponibilidad</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{disponibilidad}h</p>
+                  <p className="text-xs text-success flex items-center gap-1">
+                    <TrendingUp className="h-3 w-3" />
+                    {porcentajeDisponibilidad}%
                   </p>
                 </div>
-                <Award className="h-10 w-10 text-success/60" />
+                <Clock className="h-10 w-10 text-primary" />
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Lista de cursos */}
-        <div className="space-y-4">
-          {cursosData.map((curso) => (
-            <Card key={curso.id} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-xl mb-2">{curso.nombre}</CardTitle>
-                    <div className="flex gap-2">
-                      <Badge variant={curso.nivel === "Pregrado" ? "default" : "secondary"}>
-                        {curso.nivel}
-                      </Badge>
-                      <Badge variant="outline">{curso.tipo}</Badge>
-                      <Badge variant="outline">{curso.semestre}</Badge>
-                    </div>
+        {/* Pregrado */}
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="text-2xl">Pregrado</CardTitle>
+            <p className="text-sm text-muted-foreground">Asignaturas de pregrado actuales</p>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {cursosPregradoData.map((curso) => (
+              <div
+                key={curso.id}
+                className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:shadow-md transition-shadow"
+              >
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground mb-1">{curso.nombre}</h3>
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <span>{curso.creditos} créditos</span>
+                    <span>•</span>
+                    <span>{curso.horasSemanales}h semanales</span>
                   </div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Estudiantes matriculados</p>
-                    <p className="text-2xl font-semibold text-foreground">{curso.estudiantes}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Calificación promedio</p>
-                    <p className="text-2xl font-semibold text-primary">{curso.calificacionPromedio}</p>
+                <Badge className="bg-success text-success-foreground">{curso.estado}</Badge>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        {/* Posgrado */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl">Posgrado</CardTitle>
+            <p className="text-sm text-muted-foreground">Asignaturas de posgrado actuales</p>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {cursosPosgradoData.map((curso) => (
+              <div
+                key={curso.id}
+                className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:shadow-md transition-shadow"
+              >
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground mb-1">{curso.nombre}</h3>
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <span>{curso.creditos} créditos</span>
+                    <span>•</span>
+                    <span>{curso.horasSemanales}h semanales</span>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                <Badge className="bg-success text-success-foreground">{curso.estado}</Badge>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

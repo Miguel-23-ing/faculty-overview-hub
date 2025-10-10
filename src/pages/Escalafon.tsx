@@ -212,33 +212,6 @@ const Escalafon = () => {
           </CardContent>
         </Card>
 
-        {/* Tabla de evaluaciones detalladas */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Evaluaciones Detalladas</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {evaluacionesDetalladas.map((evaluacion) => (
-                <div 
-                  key={evaluacion.id}
-                  className="p-4 rounded-lg border border-border hover:border-primary/50 transition-colors"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <p className="font-semibold text-foreground mb-1">{evaluacion.fecha}</p>
-                      <p className="text-sm text-muted-foreground">{evaluacion.evaluador}</p>
-                    </div>
-                    <Badge variant="default" className="text-lg px-3 py-1">
-                      {evaluacion.calificacion}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground italic">{evaluacion.observaciones}</p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

@@ -1,53 +1,55 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Briefcase, Clock, CheckCircle } from "lucide-react";
+import { ArrowLeft, Briefcase, CheckCircle, Clock, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const actividadesData = [
+const actividadesAcademicasData = [
   {
     id: 1,
-    nombre: "Director de Departamento de Ingeniería",
-    tipo: "Administrativo",
-    dedicacion: "20 horas/semana",
-    fechaInicio: "Enero 2024",
-    estado: "Activo",
-    descripcion: "Coordinación general del departamento, gestión de personal y recursos"
+    nombre: "Comité Curricular",
+    estado: "Completada"
   },
   {
     id: 2,
-    nombre: "Coordinador Curricular",
-    tipo: "Académico",
-    dedicacion: "10 horas/semana",
-    fechaInicio: "Marzo 2023",
-    estado: "Activo",
-    descripcion: "Revisión y actualización del plan de estudios del programa"
+    nombre: "Coordinación de Programa",
+    estado: "Completada"
   },
   {
     id: 3,
-    nombre: "Miembro del Comité de Investigación",
-    tipo: "Académico",
-    dedicacion: "5 horas/semana",
-    fechaInicio: "Agosto 2022",
-    estado: "Activo",
-    descripcion: "Evaluación de proyectos y asesoría en investigación institucional"
+    nombre: "Acompañamiento Estudiantil",
+    estado: "Pendiente"
   },
   {
     id: 4,
+    nombre: "Dirección de Trabajos de Grado",
+    estado: "Completada"
+  }
+];
+
+const actividadesAdministrativasData = [
+  {
+    id: 1,
+    nombre: "Revisión de Planes de Estudio",
+    estado: "Completada"
+  },
+  {
+    id: 2,
     nombre: "Coordinador de Acreditación",
-    tipo: "Administrativo",
-    dedicacion: "8 horas/semana",
-    fechaInicio: "Septiembre 2024",
-    estado: "Activo",
-    descripcion: "Preparación de documentos y coordinación de procesos de acreditación"
+    estado: "Completada"
+  },
+  {
+    id: 3,
+    nombre: "Evaluación Docente",
+    estado: "Pendiente"
   }
 ];
 
 const Actividades = () => {
-  const totalHoras = actividadesData.reduce((sum, act) => {
-    const horas = parseInt(act.dedicacion.split(" ")[0]);
-    return sum + horas;
-  }, 0);
+  const totalActividades = actividadesAcademicasData.length + actividadesAdministrativasData.length;
+  const completadas = [...actividadesAcademicasData, ...actividadesAdministrativasData].filter(a => a.estado === "Completada").length;
+  const pendientes = totalActividades - completadas;
+  const porcentajeCompletadas = Math.round((completadas / totalActividades) * 100);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
@@ -61,120 +63,121 @@ const Actividades = () => {
 
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">Actividades Académicas y Administrativas</h1>
-          <p className="text-muted-foreground">Cargos, responsabilidades y tiempo de dedicación</p>
+          <p className="text-muted-foreground">Comités, coordinación y acompañamiento</p>
         </div>
 
         {/* Resumen */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
+          <Card className="bg-card border-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Total Actividades</p>
-                  <p className="text-3xl font-bold text-primary">{actividadesData.length}</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{totalActividades}</p>
+                  <p className="text-xs text-muted-foreground">Académicas y administrativas</p>
                 </div>
-                <Briefcase className="h-10 w-10 text-primary/60" />
+                <Briefcase className="h-10 w-10 text-primary" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-accent/10 to-accent/5 border-accent/20">
+          <Card className="bg-card border-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Horas Semanales</p>
-                  <p className="text-3xl font-bold text-accent">{totalHoras}</p>
-                </div>
-                <Clock className="h-10 w-10 text-accent/60" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-success/10 to-success/5 border-success/20">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Cargos Activos</p>
-                  <p className="text-3xl font-bold text-success">
-                    {actividadesData.filter(a => a.estado === "Activo").length}
+                  <p className="text-sm text-muted-foreground mb-1">Completadas</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{completadas}</p>
+                  <p className="text-xs text-success flex items-center gap-1">
+                    <TrendingUp className="h-3 w-3" />
+                    {porcentajeCompletadas}% del total
                   </p>
                 </div>
-                <CheckCircle className="h-10 w-10 text-success/60" />
+                <CheckCircle className="h-10 w-10 text-primary" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-card border-border">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">Pendientes</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{pendientes}</p>
+                  <p className="text-xs text-muted-foreground">Por completar</p>
+                </div>
+                <Clock className="h-10 w-10 text-primary" />
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Distribución por tipo */}
-        <Card className="mb-8">
+        {/* Actividades Académicas */}
+        <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Distribución de Tiempo por Tipo</CardTitle>
+            <CardTitle className="text-2xl">Actividades Académicas</CardTitle>
+            <p className="text-sm text-muted-foreground">Comités, coordinación y acompañamiento</p>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium">Actividades Académicas</span>
-                  <Badge variant="default">
-                    {actividadesData.filter(a => a.tipo === "Académico").reduce((sum, a) => {
-                      return sum + parseInt(a.dedicacion.split(" ")[0]);
-                    }, 0)} horas/semana
-                  </Badge>
+          <CardContent className="space-y-3">
+            {actividadesAcademicasData.map((actividad) => (
+              <div
+                key={actividad.id}
+                className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                    actividad.estado === "Completada" ? "bg-success/20" : "bg-muted"
+                  }`}>
+                    {actividad.estado === "Completada" && (
+                      <CheckCircle className="h-4 w-4 text-success" />
+                    )}
+                  </div>
+                  <h3 className={`font-medium ${
+                    actividad.estado === "Completada" ? "line-through text-muted-foreground" : "text-foreground"
+                  }`}>
+                    {actividad.nombre}
+                  </h3>
                 </div>
-                <div className="text-sm text-muted-foreground">
-                  {actividadesData.filter(a => a.tipo === "Académico").length} actividades
-                </div>
+                <CheckCircle className={`h-5 w-5 ${
+                  actividad.estado === "Completada" ? "text-success" : "text-muted-foreground"
+                }`} />
               </div>
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium">Actividades Administrativas</span>
-                  <Badge variant="secondary">
-                    {actividadesData.filter(a => a.tipo === "Administrativo").reduce((sum, a) => {
-                      return sum + parseInt(a.dedicacion.split(" ")[0]);
-                    }, 0)} horas/semana
-                  </Badge>
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {actividadesData.filter(a => a.tipo === "Administrativo").length} actividades
-                </div>
-              </div>
-            </div>
+            ))}
           </CardContent>
         </Card>
 
-        {/* Lista de actividades */}
-        <div className="space-y-4">
-          {actividadesData.map((actividad) => (
-            <Card key={actividad.id} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-xl mb-2">{actividad.nombre}</CardTitle>
-                    <div className="flex gap-2">
-                      <Badge variant={actividad.tipo === "Académico" ? "default" : "secondary"}>
-                        {actividad.tipo}
-                      </Badge>
-                      <Badge variant="outline">{actividad.estado}</Badge>
-                    </div>
+        {/* Actividades Administrativas */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl">Actividades Administrativas</CardTitle>
+            <p className="text-sm text-muted-foreground">Revisión de planes, informes y procesos institucionales</p>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {actividadesAdministrativasData.map((actividad) => (
+              <div
+                key={actividad.id}
+                className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                    actividad.estado === "Completada" ? "bg-success/20" : "bg-muted"
+                  }`}>
+                    {actividad.estado === "Completada" && (
+                      <CheckCircle className="h-4 w-4 text-success" />
+                    )}
                   </div>
+                  <h3 className={`font-medium ${
+                    actividad.estado === "Completada" ? "line-through text-muted-foreground" : "text-foreground"
+                  }`}>
+                    {actividad.nombre}
+                  </h3>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground mb-4">{actividad.descripcion}</p>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Dedicación semanal</p>
-                    <p className="text-lg font-semibold text-primary">{actividad.dedicacion}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Fecha de inicio</p>
-                    <p className="text-lg font-semibold text-foreground">{actividad.fechaInicio}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                <CheckCircle className={`h-5 w-5 ${
+                  actividad.estado === "Completada" ? "text-success" : "text-muted-foreground"
+                }`} />
+              </div>
+            ))}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

@@ -1,70 +1,50 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Building2, TrendingUp, CheckCircle } from "lucide-react";
+import { ArrowLeft, Briefcase, Users, FileText } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const organizacionesData = [
+const proyectosData = [
   {
     id: 1,
-    empresa: "TechCorp Colombia",
-    tipo: "Capacitación",
-    actividad: "Curso de Machine Learning Aplicado",
-    duracion: "3 meses",
-    fechaInicio: "Enero 2025",
-    fechaFin: "Marzo 2025",
-    estado: "En progreso",
-    descripcion: "Capacitación en técnicas avanzadas de ML para el equipo de desarrollo"
+    nombre: "Banco Nacional",
+    tipo: "Consultoría",
+    fecha: "2024-03",
+    estado: "Ejecutada"
   },
   {
     id: 2,
-    empresa: "Banco Nacional",
-    tipo: "Consultoría",
-    actividad: "Implementación de Sistema de IA para Detección de Fraude",
-    duracion: "6 meses",
-    fechaInicio: "Octubre 2024",
-    fechaFin: "Marzo 2025",
-    estado: "En progreso",
-    descripcion: "Diseño e implementación de modelo predictivo para detección de fraude"
-  },
-  {
-    id: 3,
-    empresa: "StartupHub",
-    tipo: "Asesoría",
-    actividad: "Asesoría en Arquitectura de Software",
-    duracion: "2 meses",
-    fechaInicio: "Noviembre 2024",
-    fechaFin: "Diciembre 2024",
-    estado: "Completado",
-    descripcion: "Revisión y mejora de la arquitectura de software de la plataforma"
-  },
-  {
-    id: 4,
-    empresa: "IndustriasTech",
+    nombre: "Industrias XYZ",
     tipo: "Proyecto",
-    actividad: "Desarrollo de Sistema de Gestión IoT",
-    duracion: "8 meses",
-    fechaInicio: "Julio 2024",
-    fechaFin: "Febrero 2025",
-    estado: "En progreso",
-    descripcion: "Creación de plataforma IoT para monitoreo industrial"
-  },
+    fecha: "2024-01",
+    estado: "En revisión"
+  }
+];
+
+const capacitacionesData = [
   {
-    id: 5,
-    empresa: "EduTech Solutions",
-    tipo: "Capacitación",
-    actividad: "Workshop de Desarrollo Ágil",
-    duracion: "1 mes",
-    fechaInicio: "Septiembre 2024",
-    fechaFin: "Septiembre 2024",
-    estado: "Completado",
-    descripcion: "Talleres prácticos sobre metodologías ágiles de desarrollo"
+    id: 1,
+    nombre: "Corporación ABC",
+    actividad: "Transformación Digital",
+    fecha: "2024-02",
+    estado: "Ejecutada"
+  }
+];
+
+const propuestasData = [
+  {
+    id: 1,
+    nombre: "Empresa DEF",
+    actividad: "Consultoría en IA",
+    fecha: "2025-01",
+    estado: "En proceso"
   }
 ];
 
 const Organizaciones = () => {
-  const proyectosActivos = organizacionesData.filter(o => o.estado === "En progreso").length;
-  const proyectosCompletados = organizacionesData.filter(o => o.estado === "Completado").length;
+  const totalProyectos = proyectosData.length;
+  const totalCapacitaciones = capacitacionesData.length;
+  const totalPropuestas = propuestasData.length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
@@ -78,108 +58,123 @@ const Organizaciones = () => {
 
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">Organizaciones</h1>
-          <p className="text-muted-foreground">Proyectos, capacitaciones y colaboraciones con empresas</p>
+          <p className="text-muted-foreground">Proyectos de extensión y capacitaciones empresariales</p>
         </div>
 
         {/* Resumen */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
+          <Card className="bg-card border-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Total Colaboraciones</p>
-                  <p className="text-3xl font-bold text-primary">{organizacionesData.length}</p>
+                  <p className="text-sm text-muted-foreground mb-1">Proyectos</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{totalProyectos}</p>
+                  <p className="text-xs text-muted-foreground">Activos y completados</p>
                 </div>
-                <Building2 className="h-10 w-10 text-primary/60" />
+                <Briefcase className="h-10 w-10 text-primary" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-accent/10 to-accent/5 border-accent/20">
+          <Card className="bg-card border-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">En Progreso</p>
-                  <p className="text-3xl font-bold text-accent">{proyectosActivos}</p>
+                  <p className="text-sm text-muted-foreground mb-1">Capacitaciones</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{totalCapacitaciones}</p>
+                  <p className="text-xs text-muted-foreground">Realizadas</p>
                 </div>
-                <TrendingUp className="h-10 w-10 text-accent/60" />
+                <Users className="h-10 w-10 text-primary" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-success/10 to-success/5 border-success/20">
+          <Card className="bg-card border-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Completados</p>
-                  <p className="text-3xl font-bold text-success">{proyectosCompletados}</p>
+                  <p className="text-sm text-muted-foreground mb-1">Propuestas</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{totalPropuestas}</p>
+                  <p className="text-xs text-muted-foreground">En proceso</p>
                 </div>
-                <CheckCircle className="h-10 w-10 text-success/60" />
+                <FileText className="h-10 w-10 text-primary" />
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Distribución por tipo */}
-        <Card className="mb-8">
+        {/* Proyectos */}
+        <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Distribución por Tipo de Actividad</CardTitle>
+            <CardTitle className="text-2xl">Proyectos</CardTitle>
+            <p className="text-sm text-muted-foreground">Consultorías y proyectos de extensión</p>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {["Capacitación", "Consultoría", "Asesoría", "Proyecto"].map((tipo) => {
-                const count = organizacionesData.filter(o => o.tipo === tipo).length;
-                return (
-                  <div key={tipo} className="text-center p-4 bg-secondary/50 rounded-lg">
-                    <p className="text-2xl font-bold text-primary mb-1">{count}</p>
-                    <p className="text-sm text-muted-foreground">{tipo}</p>
+          <CardContent className="space-y-3">
+            {proyectosData.map((proyecto) => (
+              <div
+                key={proyecto.id}
+                className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:shadow-md transition-shadow"
+              >
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground mb-1">{proyecto.nombre}</h3>
+                  <div className="flex items-center gap-3">
+                    <Badge variant="outline" className="text-xs">{proyecto.tipo}</Badge>
+                    <span className="text-sm text-muted-foreground">{proyecto.fecha}</span>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+                <Badge className={proyecto.estado === "Ejecutada" ? "bg-success text-success-foreground" : "bg-primary text-primary-foreground"}>
+                  {proyecto.estado}
+                </Badge>
+              </div>
+            ))}
           </CardContent>
         </Card>
 
-        {/* Lista de proyectos */}
-        <div className="space-y-4">
-          {organizacionesData.map((org) => (
-            <Card key={org.id} className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-xl mb-2">{org.actividad}</CardTitle>
-                    <div className="flex gap-2 flex-wrap">
-                      <Badge variant="default">{org.tipo}</Badge>
-                      <Badge variant={org.estado === "En progreso" ? "secondary" : "outline"}>
-                        {org.estado}
-                      </Badge>
-                    </div>
-                  </div>
+        {/* Capacitaciones */}
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="text-2xl">Capacitaciones</CardTitle>
+            <p className="text-sm text-muted-foreground">Programas de formación empresarial</p>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {capacitacionesData.map((capacitacion) => (
+              <div
+                key={capacitacion.id}
+                className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:shadow-md transition-shadow"
+              >
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground mb-1">{capacitacion.nombre}</h3>
+                  <p className="text-sm text-muted-foreground mb-1">{capacitacion.actividad}</p>
+                  <span className="text-xs text-muted-foreground">{capacitacion.fecha}</span>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="mb-4">
-                  <p className="text-sm font-medium text-primary mb-1">Empresa: {org.empresa}</p>
-                  <p className="text-sm text-muted-foreground">{org.descripcion}</p>
+                <Badge className="bg-success text-success-foreground">{capacitacion.estado}</Badge>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        {/* Propuestas */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl">Propuestas</CardTitle>
+            <p className="text-sm text-muted-foreground">Propuestas en evaluación o desarrollo</p>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {propuestasData.map((propuesta) => (
+              <div
+                key={propuesta.id}
+                className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:shadow-md transition-shadow"
+              >
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground mb-1">{propuesta.nombre}</h3>
+                  <p className="text-sm text-muted-foreground mb-1">{propuesta.actividad}</p>
+                  <span className="text-xs text-muted-foreground">{propuesta.fecha}</span>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Duración</p>
-                    <p className="font-medium text-foreground">{org.duracion}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Fecha inicio</p>
-                    <p className="font-medium text-foreground">{org.fechaInicio}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Fecha fin</p>
-                    <p className="font-medium text-foreground">{org.fechaFin}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                <Badge className="bg-accent text-accent-foreground">{propuesta.estado}</Badge>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

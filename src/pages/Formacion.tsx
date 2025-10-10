@@ -111,11 +111,11 @@ const Formacion = () => {
           </Card>
         </div>
 
-        {/* Formación académica */}
+        {/* Formación Interna */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-foreground mb-4">Títulos Académicos</h2>
+          <h2 className="text-2xl font-semibold text-foreground mb-4">Formación Interna (Universidad Icesi)</h2>
           <div className="space-y-4">
-            {formacionData.map((formacion) => (
+            {formacionData.filter(f => f.tipo === "Interna").map((formacion) => (
               <Card key={formacion.id} className="hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="flex items-start justify-between">
@@ -123,9 +123,45 @@ const Formacion = () => {
                       <CardTitle className="text-xl mb-2">{formacion.titulo}</CardTitle>
                       <div className="flex gap-2 flex-wrap">
                         <Badge variant="default">{formacion.nivel}</Badge>
-                        <Badge variant={formacion.tipo === "Externa" ? "secondary" : "outline"}>
-                          {formacion.tipo}
-                        </Badge>
+                        <Badge variant="outline">{formacion.estado}</Badge>
+                      </div>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-1">Institución</p>
+                      <p className="font-medium text-foreground">{formacion.institucion}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-1">País</p>
+                      <p className="font-medium text-foreground">{formacion.pais}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-1">Año de graduación</p>
+                      <p className="font-medium text-foreground">{formacion.añoGraduacion}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Formación Externa */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold text-foreground mb-4">Formación Externa (Nacional e Internacional)</h2>
+          <div className="space-y-4">
+            {formacionData.filter(f => f.tipo === "Externa").map((formacion) => (
+              <Card key={formacion.id} className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-xl mb-2">{formacion.titulo}</CardTitle>
+                      <div className="flex gap-2 flex-wrap">
+                        <Badge variant="default">{formacion.nivel}</Badge>
+                        <Badge variant="secondary">Externa</Badge>
                         <Badge variant="outline">{formacion.estado}</Badge>
                       </div>
                     </div>
