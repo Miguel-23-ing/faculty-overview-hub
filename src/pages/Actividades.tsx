@@ -4,52 +4,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const actividadesAcademicasData = [
-  {
-    id: 1,
-    nombre: "Comité Curricular",
-    estado: "Completada"
-  },
-  {
-    id: 2,
-    nombre: "Coordinación de Programa",
-    estado: "Completada"
-  },
-  {
-    id: 3,
-    nombre: "Acompañamiento Estudiantil",
-    estado: "Pendiente"
-  },
-  {
-    id: 4,
-    nombre: "Dirección de Trabajos de Grado",
-    estado: "Completada"
-  }
+export const actividadesAcademicasData = [
+  { id: 1, nombre: "Comité Curricular", tipo: "Rol académico", estado: "Activo" },
+  { id: 2, nombre: "Coordinación de Programa", tipo: "Rol académico", estado: "Activo" },
+  { id: 3, nombre: "Acompañamiento Estudiantil", tipo: "Rol académico", estado: "Activo" },
+  { id: 4, nombre: "Dirección de Trabajos de Grado", tipo: "Rol académico", estado: "Activo" },
 ];
 
-const actividadesAdministrativasData = [
-  {
-    id: 1,
-    nombre: "Revisión de Planes de Estudio",
-    estado: "Completada"
-  },
-  {
-    id: 2,
-    nombre: "Coordinador de Acreditación",
-    estado: "Completada"
-  },
-  {
-    id: 3,
-    nombre: "Evaluación Docente",
-    estado: "Pendiente"
-  }
+export const actividadesAdministrativasData = [
+  { id: 1, nombre: "Director de Programa", tipo: "Rol administrativo", estado: "Activo" },
+  { id: 2, nombre: "Coordinador de Acreditación", tipo: "Rol administrativo", estado: "Activo" },
+  { id: 3, nombre: "Líder de Escuela", tipo: "Rol administrativo", estado: "Activo" },
 ];
 
 const Actividades = () => {
   const totalActividades = actividadesAcademicasData.length + actividadesAdministrativasData.length;
-  const completadas = [...actividadesAcademicasData, ...actividadesAdministrativasData].filter(a => a.estado === "Completada").length;
-  const pendientes = totalActividades - completadas;
-  const porcentajeCompletadas = Math.round((completadas / totalActividades) * 100);
+  const rolesActivos = [...actividadesAcademicasData, ...actividadesAdministrativasData].filter(a => a.estado === "Activo").length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
@@ -62,8 +32,8 @@ const Actividades = () => {
         </Link>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Actividades Académicas y Administrativas</h1>
-          <p className="text-muted-foreground">Comités, coordinación y acompañamiento</p>
+          <h1 className="text-4xl font-bold text-foreground mb-2">Roles</h1>
+          <p className="text-muted-foreground">Roles académicos y administrativos del profesor</p>
         </div>
 
         {/* Resumen */}
@@ -72,9 +42,9 @@ const Actividades = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Total Actividades</p>
+                  <p className="text-sm text-muted-foreground mb-1">Total Roles</p>
                   <p className="text-3xl font-bold text-foreground mb-1">{totalActividades}</p>
-                  <p className="text-xs text-muted-foreground">Académicas y administrativas</p>
+                  <p className="text-xs text-muted-foreground">Académicos y administrativos</p>
                 </div>
                 <Briefcase className="h-10 w-10 text-primary" />
               </div>
@@ -85,12 +55,9 @@ const Actividades = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Completadas</p>
-                  <p className="text-3xl font-bold text-foreground mb-1">{completadas}</p>
-                  <p className="text-xs text-success flex items-center gap-1">
-                    <TrendingUp className="h-3 w-3" />
-                    {porcentajeCompletadas}% del total
-                  </p>
+                  <p className="text-sm text-muted-foreground mb-1">Roles Activos</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{rolesActivos}</p>
+                  <p className="text-xs text-muted-foreground">En ejercicio</p>
                 </div>
                 <CheckCircle className="h-10 w-10 text-primary" />
               </div>
@@ -101,20 +68,20 @@ const Actividades = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Pendientes</p>
-                  <p className="text-3xl font-bold text-foreground mb-1">{pendientes}</p>
-                  <p className="text-xs text-muted-foreground">Por completar</p>
+                  <p className="text-sm text-muted-foreground mb-1">Académicos</p>
+                  <p className="text-3xl font-bold text-foreground mb-1">{actividadesAcademicasData.length}</p>
+                  <p className="text-xs text-muted-foreground">vs {actividadesAdministrativasData.length} administrativos</p>
                 </div>
-                <Clock className="h-10 w-10 text-primary" />
+                <TrendingUp className="h-10 w-10 text-primary" />
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Actividades Académicas */}
+        {/* Roles Académicos */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle className="text-2xl">Actividades Académicas</CardTitle>
+            <CardTitle className="text-2xl">Roles Académicos</CardTitle>
             <p className="text-sm text-muted-foreground">Comités, coordinación y acompañamiento</p>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -124,32 +91,22 @@ const Actividades = () => {
                 className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                    actividad.estado === "Completada" ? "bg-success/20" : "bg-muted"
-                  }`}>
-                    {actividad.estado === "Completada" && (
-                      <CheckCircle className="h-4 w-4 text-success" />
-                    )}
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center bg-primary/20">
+                    <CheckCircle className="h-4 w-4 text-primary" />
                   </div>
-                  <h3 className={`font-medium ${
-                    actividad.estado === "Completada" ? "line-through text-muted-foreground" : "text-foreground"
-                  }`}>
-                    {actividad.nombre}
-                  </h3>
+                  <h3 className="font-medium text-foreground">{actividad.nombre}</h3>
                 </div>
-                <CheckCircle className={`h-5 w-5 ${
-                  actividad.estado === "Completada" ? "text-success" : "text-muted-foreground"
-                }`} />
+                <Badge className="bg-primary text-primary-foreground">{actividad.estado}</Badge>
               </div>
             ))}
           </CardContent>
         </Card>
 
-        {/* Actividades Administrativas */}
+        {/* Roles Administrativos */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl">Actividades Administrativas</CardTitle>
-            <p className="text-sm text-muted-foreground">Revisión de planes, informes y procesos institucionales</p>
+            <CardTitle className="text-2xl">Roles Administrativos</CardTitle>
+            <p className="text-sm text-muted-foreground">Dirección, coordinación y procesos institucionales</p>
           </CardHeader>
           <CardContent className="space-y-3">
             {actividadesAdministrativasData.map((actividad) => (
@@ -158,22 +115,12 @@ const Actividades = () => {
                 className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                    actividad.estado === "Completada" ? "bg-success/20" : "bg-muted"
-                  }`}>
-                    {actividad.estado === "Completada" && (
-                      <CheckCircle className="h-4 w-4 text-success" />
-                    )}
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center bg-accent/20">
+                    <CheckCircle className="h-4 w-4 text-accent" />
                   </div>
-                  <h3 className={`font-medium ${
-                    actividad.estado === "Completada" ? "line-through text-muted-foreground" : "text-foreground"
-                  }`}>
-                    {actividad.nombre}
-                  </h3>
+                  <h3 className="font-medium text-foreground">{actividad.nombre}</h3>
                 </div>
-                <CheckCircle className={`h-5 w-5 ${
-                  actividad.estado === "Completada" ? "text-success" : "text-muted-foreground"
-                }`} />
+                <Badge className="bg-accent text-accent-foreground">{actividad.estado}</Badge>
               </div>
             ))}
           </CardContent>

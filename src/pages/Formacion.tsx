@@ -4,57 +4,59 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const formacionData = [
+export const formacionData = [
   {
     id: 1,
     nivel: "Doctorado (Ph.D.)",
-    titulo: "Doctor en Ingeniería de Sistemas",
+    titulo: "Doctor en Ingeniería de Sistemas y Computación",
     institucion: "Universidad Nacional",
-    tipo: "Interna",
+    tipo: "Formación",
     pais: "Colombia",
     añoGraduacion: 2020,
-    estado: "Completado"
+    estado: "Completado",
   },
   {
     id: 2,
     nivel: "Maestría",
     titulo: "Magíster en Inteligencia Artificial",
     institucion: "Universidad de Stanford",
-    tipo: "Externa",
+    tipo: "Formación externa",
     pais: "Estados Unidos",
     añoGraduacion: 2015,
-    estado: "Completado"
+    estado: "Completado",
   },
   {
     id: 3,
     nivel: "Pregrado",
     titulo: "Ingeniero de Sistemas",
     institucion: "Universidad Nacional",
-    tipo: "Interna",
+    tipo: "Formación",
     pais: "Colombia",
     añoGraduacion: 2012,
-    estado: "Completado"
+    estado: "Completado",
   }
 ];
 
-const certificacionesData = [
+export const certificacionesData = [
   {
     id: 1,
     nombre: "AWS Certified Solutions Architect",
     institucion: "Amazon Web Services",
     año: 2023,
-    tipo: "Internacional"
+    tipo: "Formación externa",
   },
   {
     id: 2,
     nombre: "Curso de Pedagogía Universitaria",
     institucion: "Universidad Nacional",
     año: 2021,
-    tipo: "Nacional"
+    tipo: "Formación externa",
   }
 ];
 
 const Formacion = () => {
+  const cantidadFormaciones = formacionData.length + certificacionesData.length;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -66,8 +68,8 @@ const Formacion = () => {
         </Link>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Formación Académica</h1>
-          <p className="text-muted-foreground">Nivel académico, certificaciones y formación continua</p>
+          <h1 className="text-4xl font-bold text-foreground mb-2">Formación</h1>
+          <p className="text-muted-foreground">Listado de formaciones y certificaciones</p>
         </div>
 
         {/* Resumen */}
@@ -76,8 +78,8 @@ const Formacion = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Nivel Máximo</p>
-                  <p className="text-2xl font-bold text-primary">Doctorado</p>
+                  <p className="text-sm text-muted-foreground mb-1">Cantidad de formaciones</p>
+                  <p className="text-3xl font-bold text-primary">{cantidadFormaciones}</p>
                 </div>
                 <GraduationCap className="h-10 w-10 text-primary/60" />
               </div>
@@ -102,7 +104,7 @@ const Formacion = () => {
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Formación Externa</p>
                   <p className="text-3xl font-bold text-success">
-                    {formacionData.filter(f => f.tipo === "Externa").length}
+                    {formacionData.filter(f => f.tipo === "Formación externa").length + certificacionesData.length}
                   </p>
                 </div>
                 <Globe className="h-10 w-10 text-success/60" />
@@ -111,11 +113,11 @@ const Formacion = () => {
           </Card>
         </div>
 
-        {/* Formación Interna */}
+        {/* Formación Académica */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-foreground mb-4">Formación Interna (Universidad Icesi)</h2>
+          <h2 className="text-2xl font-semibold text-foreground mb-4">Formación Académica</h2>
           <div className="space-y-4">
-            {formacionData.filter(f => f.tipo === "Interna").map((formacion) => (
+            {formacionData.map((formacion) => (
               <Card key={formacion.id} className="hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="flex items-start justify-between">
@@ -123,45 +125,6 @@ const Formacion = () => {
                       <CardTitle className="text-xl mb-2">{formacion.titulo}</CardTitle>
                       <div className="flex gap-2 flex-wrap">
                         <Badge variant="default">{formacion.nivel}</Badge>
-                        <Badge variant="outline">{formacion.estado}</Badge>
-                      </div>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Institución</p>
-                      <p className="font-medium text-foreground">{formacion.institucion}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">País</p>
-                      <p className="font-medium text-foreground">{formacion.pais}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Año de graduación</p>
-                      <p className="font-medium text-foreground">{formacion.añoGraduacion}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Formación Externa */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-foreground mb-4">Formación Externa (Nacional e Internacional)</h2>
-          <div className="space-y-4">
-            {formacionData.filter(f => f.tipo === "Externa").map((formacion) => (
-              <Card key={formacion.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-xl mb-2">{formacion.titulo}</CardTitle>
-                      <div className="flex gap-2 flex-wrap">
-                        <Badge variant="default">{formacion.nivel}</Badge>
-                        <Badge variant="secondary">Externa</Badge>
                         <Badge variant="outline">{formacion.estado}</Badge>
                       </div>
                     </div>

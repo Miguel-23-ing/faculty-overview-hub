@@ -1,56 +1,71 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, FlaskConical, Users, TrendingUp } from "lucide-react";
+import { ArrowLeft, FlaskConical, Users, TrendingUp, Award } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
-const proyectosData = [
+export const proyectosData = [
   {
     id: 1,
     nombre: "Desarrollo de Algoritmos de Machine Learning para Diagnóstico Médico",
     tipo: "Proyecto Principal",
-    estado: "En progreso",
+    estado: "Activo",
+    indiceProfesores: 3,
     avance: 65,
-    rol: "Investigador Principal",
     fechaInicio: "Enero 2024",
-    participantes: 5
+    fechaFinalizacion: "Diciembre 2025",
+    productos: [
+      { id: "p1", nombre: "Artículo A", comprometido: true, completado: true, puntos: 80 },
+      { id: "p2", nombre: "Dataset", comprometido: true, completado: false, puntos: 60 },
+    ],
   },
   {
     id: 2,
     nombre: "Optimización de Bases de Datos Distribuidas",
     tipo: "Proyecto",
-    estado: "En progreso",
-    avance: 40,
-    rol: "Co-investigador",
-    fechaInicio: "Marzo 2024",
-    participantes: 3
+    estado: "Propuesto",
+    indiceProfesores: 2,
+    avance: 10,
+    fechaInicio: "Marzo 2025",
+    fechaFinalizacion: "N/A",
+    productos: [{ id: "p1", nombre: "Propuesta Técnica", comprometido: true, completado: false, puntos: 40 }],
   },
   {
     id: 3,
     nombre: "Semillero de Inteligencia Artificial",
     tipo: "Semillero",
     estado: "Activo",
+    indiceProfesores: 1,
     avance: 75,
-    rol: "Director",
     fechaInicio: "Agosto 2023",
-    participantes: 12
+    fechaFinalizacion: "Agosto 2025",
+    productos: [
+      { id: "p1", nombre: "Prototipo", comprometido: true, completado: true, puntos: 50 },
+      { id: "p2", nombre: "Paper", comprometido: true, completado: false, puntos: 70 },
+    ],
   },
   {
     id: 4,
     nombre: "Aplicaciones de Blockchain en Educación",
     tipo: "Proyecto",
-    estado: "Planificación",
-    avance: 15,
-    rol: "Investigador Principal",
-    fechaInicio: "Febrero 2025",
-    participantes: 4
+    estado: "Cerrado",
+    indiceProfesores: 4,
+    avance: 100,
+    fechaInicio: "Febrero 2023",
+    fechaFinalizacion: "Febrero 2024",
+    productos: [
+      { id: "p1", nombre: "Artículo final", comprometido: true, completado: true, puntos: 90 },
+    ],
   }
 ];
 
 const Investigacion = () => {
-  const proyectosActivos = proyectosData.filter(p => p.estado !== "Finalizado").length;
-  const totalParticipantes = proyectosData.reduce((sum, p) => sum + p.participantes, 0);
+  const proyectosActivos = proyectosData.filter((p) => p.estado === "Activo").length;
+  const productosComprometidos = proyectosData.reduce((sum, p) => sum + p.productos.filter((pr) => pr.comprometido).length, 0);
+  const productosCompletados = proyectosData.reduce((sum, p) => sum + p.productos.filter((pr) => pr.completado).length, 0);
+  const puntosObtenidos = proyectosData.reduce((sum, p) => sum + p.productos.filter((pr) => pr.completado).reduce((s, pr) => s + (pr.puntos || 0), 0), 0);
+  const puntosPendientes = proyectosData.reduce((sum, p) => sum + p.productos.filter((pr) => pr.comprometido && !pr.completado).reduce((s, pr) => s + (pr.puntos || 0), 0), 0);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
@@ -68,7 +83,7 @@ const Investigacion = () => {
         </div>
 
         {/* Resumen */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -81,28 +96,43 @@ const Investigacion = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-accent/10 to-accent/5 border-accent/20">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Total Participantes</p>
-                  <p className="text-3xl font-bold text-accent">{totalParticipantes}</p>
+          <Link to="/mapa-colaboracion">
+            <Card className="bg-gradient-to-br from-accent/10 to-accent/5 border-accent/20 hover:shadow-lg transition-shadow cursor-pointer">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-1">Índice de profesores</p>
+                    <p className="text-3xl font-bold text-foreground">{proyectosData.reduce((sum, p) => sum + (p.indiceProfesores || 0), 0)}</p>
+                    <p className="text-xs text-accent">Clic para ver mapa de colaboración</p>
+                  </div>
+                  <Users className="h-10 w-10 text-accent/60" />
                 </div>
-                <Users className="h-10 w-10 text-accent/60" />
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
 
           <Card className="bg-gradient-to-br from-success/10 to-success/5 border-success/20">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Avance Promedio</p>
-                  <p className="text-3xl font-bold text-success">
-                    {Math.round(proyectosData.reduce((sum, p) => sum + p.avance, 0) / proyectosData.length)}%
-                  </p>
+                  <p className="text-sm text-muted-foreground mb-1">Productos</p>
+                  <p className="text-3xl font-bold text-success">{productosCompletados} / {productosComprometidos}</p>
+                  <p className="text-xs text-muted-foreground">completados / comprometidos</p>
                 </div>
                 <TrendingUp className="h-10 w-10 text-success/60" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-warning/10 to-warning/5 border-warning/20">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">Puntos</p>
+                  <p className="text-3xl font-bold text-warning">{puntosObtenidos}</p>
+                  <p className="text-xs text-muted-foreground">+ {puntosPendientes} pendientes</p>
+                </div>
+                <Award className="h-10 w-10 text-warning/60" />
               </div>
             </CardContent>
           </Card>
@@ -116,14 +146,10 @@ const Investigacion = () => {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <CardTitle className="text-xl mb-2">{proyecto.nombre}</CardTitle>
-                    <div className="flex gap-2 flex-wrap">
+                    <div className="flex gap-2 flex-wrap text-sm">
                       <Badge variant="default">{proyecto.tipo}</Badge>
-                      <Badge 
-                        variant={proyecto.estado === "En progreso" ? "default" : proyecto.estado === "Activo" ? "secondary" : "outline"}
-                      >
-                        {proyecto.estado}
-                      </Badge>
-                      <Badge variant="outline">{proyecto.rol}</Badge>
+                      <Badge>{proyecto.estado}</Badge>
+                      <Badge variant="outline">{proyecto.indiceProfesores} profesores</Badge>
                     </div>
                   </div>
                 </div>
@@ -136,17 +162,32 @@ const Investigacion = () => {
                       <p className="font-medium text-foreground">{proyecto.fechaInicio}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground mb-1">Participantes</p>
-                      <p className="font-medium text-foreground">{proyecto.participantes} personas</p>
+                      <p className="text-sm text-muted-foreground mb-1">Fecha de fin</p>
+                      <p className="font-medium text-foreground">{proyecto.fechaFinalizacion}</p>
                     </div>
                   </div>
-                  
+
                   <div>
-                    <div className="flex justify-between items-center mb-2">
-                      <p className="text-sm text-muted-foreground">Avance del proyecto</p>
-                      <p className="text-sm font-semibold text-primary">{proyecto.avance}%</p>
-                    </div>
-                    <Progress value={proyecto.avance} className="h-2" />
+                    <p className="text-sm text-muted-foreground">Productos comprometidos</p>
+                    <ul className="mt-2 space-y-2">
+                      {proyecto.productos.map((pr) => (
+                        <li key={pr.id} className="flex justify-between items-center p-2 rounded border border-border bg-muted/20">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm">{pr.nombre}</span>
+                            <Badge variant="outline" className="text-xs">
+                              {pr.puntos} pts
+                            </Badge>
+                          </div>
+                          <span className={`text-xs ${pr.completado ? "text-success" : "text-muted-foreground"}`}>
+                            {pr.completado ? "Completado" : "Pendiente"}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex justify-end gap-2">
+                    <Button onClick={() => console.log("Ver proyecto", proyecto.id)}>Ver productos</Button>
                   </div>
                 </div>
               </CardContent>

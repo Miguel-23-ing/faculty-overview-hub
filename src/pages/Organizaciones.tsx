@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const proyectosData = [
+export const proyectosData = [
   {
     id: 1,
     nombre: "Banco Nacional",
@@ -21,11 +21,11 @@ const proyectosData = [
   }
 ];
 
-const capacitacionesData = [
+export const formacionesData = [
   {
     id: 1,
     nombre: "Corporación ABC",
-    actividad: "Transformación Digital",
+    actividad: "Formación",
     fecha: "2024-02",
     estado: "Ejecutada"
   }
@@ -43,7 +43,7 @@ const propuestasData = [
 
 const Organizaciones = () => {
   const totalProyectos = proyectosData.length;
-  const totalCapacitaciones = capacitacionesData.length;
+  const totalFormaciones = formacionesData.length;
   const totalPropuestas = propuestasData.length;
 
   return (
@@ -58,7 +58,7 @@ const Organizaciones = () => {
 
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">Organizaciones</h1>
-          <p className="text-muted-foreground">Proyectos de extensión y capacitaciones empresariales</p>
+          <p className="text-muted-foreground">Proyectos, consultorías y formación con empresas</p>
         </div>
 
         {/* Resumen */}
@@ -78,13 +78,10 @@ const Organizaciones = () => {
 
           <Card className="bg-card border-border">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Capacitaciones</p>
-                  <p className="text-3xl font-bold text-foreground mb-1">{totalCapacitaciones}</p>
-                  <p className="text-xs text-muted-foreground">Realizadas</p>
-                </div>
-                <Users className="h-10 w-10 text-primary" />
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Capacitaciones / Formación</p>
+                <p className="text-3xl font-bold text-foreground mb-1">{totalFormaciones}</p>
+                <p className="text-xs text-muted-foreground">Realizadas</p>
               </div>
             </CardContent>
           </Card>
@@ -130,24 +127,24 @@ const Organizaciones = () => {
           </CardContent>
         </Card>
 
-        {/* Capacitaciones */}
+        {/* Formaciones */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle className="text-2xl">Capacitaciones</CardTitle>
+            <CardTitle className="text-2xl">Formación</CardTitle>
             <p className="text-sm text-muted-foreground">Programas de formación empresarial</p>
           </CardHeader>
           <CardContent className="space-y-3">
-            {capacitacionesData.map((capacitacion) => (
+            {formacionesData.map((formacion) => (
               <div
-                key={capacitacion.id}
+                key={formacion.id}
                 className="flex items-center justify-between p-4 rounded-lg border border-border bg-card hover:shadow-md transition-shadow"
               >
                 <div className="flex-1">
-                  <h3 className="font-semibold text-foreground mb-1">{capacitacion.nombre}</h3>
-                  <p className="text-sm text-muted-foreground mb-1">{capacitacion.actividad}</p>
-                  <span className="text-xs text-muted-foreground">{capacitacion.fecha}</span>
+                  <h3 className="font-semibold text-foreground mb-1">{formacion.nombre}</h3>
+                  <p className="text-sm text-muted-foreground mb-1">{formacion.actividad}</p>
+                  <span className="text-xs text-muted-foreground">{formacion.fecha}</span>
                 </div>
-                <Badge className="bg-success text-success-foreground">{capacitacion.estado}</Badge>
+                <Badge className="bg-success text-success-foreground">{formacion.estado}</Badge>
               </div>
             ))}
           </CardContent>

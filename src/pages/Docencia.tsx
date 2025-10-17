@@ -4,46 +4,47 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const cursosPregradoData = [
+export const cursosPregradoData = [
   {
     id: 1,
     nombre: "Algoritmos y Programación I",
     creditos: 3,
     horasSemanales: 6,
-    estado: "Activo"
+    estado: "Activo",
+    estudiantes: 120,
   },
   {
     id: 2,
     nombre: "Estructuras de Datos",
     creditos: 4,
     horasSemanales: 8,
-    estado: "Activo"
+    estado: "Activo",
+    estudiantes: 90,
   },
   {
     id: 3,
     nombre: "Desarrollo Web",
     creditos: 3,
     horasSemanales: 6,
-    estado: "Activo"
+    estado: "Programado",
+    estudiantes: 60,
   }
 ];
 
-const cursosPosgradoData = [
+export const cursosPosgradoData = [
   {
     id: 1,
     nombre: "Inteligencia Artificial Avanzada",
     creditos: 4,
     horasSemanales: 4,
-    estado: "Activo"
+    estado: "Activo",
+    estudiantes: 18,
   }
 ];
 
 const Docencia = () => {
   const totalCursos = cursosPregradoData.length + cursosPosgradoData.length;
   const horasSemanales = [...cursosPregradoData, ...cursosPosgradoData].reduce((sum, curso) => sum + curso.horasSemanales, 0);
-  const horasAsignadas = 48;
-  const disponibilidad = horasAsignadas - horasSemanales;
-  const porcentajeDisponibilidad = Math.round((disponibilidad / horasAsignadas) * 100);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-secondary via-background to-secondary/50">
@@ -61,7 +62,7 @@ const Docencia = () => {
         </div>
 
         {/* Resumen */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <Card className="bg-card border-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -81,23 +82,7 @@ const Docencia = () => {
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Horas Semanales</p>
                   <p className="text-3xl font-bold text-foreground mb-1">{horasSemanales}h</p>
-                  <p className="text-xs text-muted-foreground">de {horasAsignadas}h asignadas</p>
-                </div>
-                <Clock className="h-10 w-10 text-primary" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-border">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Disponibilidad</p>
-                  <p className="text-3xl font-bold text-foreground mb-1">{disponibilidad}h</p>
-                  <p className="text-xs text-success flex items-center gap-1">
-                    <TrendingUp className="h-3 w-3" />
-                    {porcentajeDisponibilidad}%
-                  </p>
+                  <p className="text-xs text-muted-foreground">Carga horaria docencia</p>
                 </div>
                 <Clock className="h-10 w-10 text-primary" />
               </div>
@@ -123,9 +108,16 @@ const Docencia = () => {
                     <span>{curso.creditos} créditos</span>
                     <span>•</span>
                     <span>{curso.horasSemanales}h semanales</span>
+                    <span>•</span>
+                    <span>{curso.estudiantes} estudiantes</span>
                   </div>
                 </div>
-                <Badge className="bg-success text-success-foreground">{curso.estado}</Badge>
+                <div className="flex items-center gap-2">
+                  <Badge className={curso.estado === "Activo" ? "bg-success text-success-foreground" : "bg-muted text-muted-foreground"}>
+                    {curso.estado}
+                  </Badge>
+                  <Button size="sm" variant="outline" onClick={() => console.log("Más info curso", curso.id)}>Más info</Button>
+                </div>
               </div>
             ))}
           </CardContent>
@@ -149,9 +141,16 @@ const Docencia = () => {
                     <span>{curso.creditos} créditos</span>
                     <span>•</span>
                     <span>{curso.horasSemanales}h semanales</span>
+                    <span>•</span>
+                    <span>{curso.estudiantes} estudiantes</span>
                   </div>
                 </div>
-                <Badge className="bg-success text-success-foreground">{curso.estado}</Badge>
+                <div className="flex items-center gap-2">
+                  <Badge className={curso.estado === "Activo" ? "bg-success text-success-foreground" : "bg-muted text-muted-foreground"}>
+                    {curso.estado}
+                  </Badge>
+                  <Button size="sm" variant="outline" onClick={() => console.log("Más info posgrado", curso.id)}>Más info</Button>
+                </div>
               </div>
             ))}
           </CardContent>
